@@ -1,9 +1,19 @@
+import { Quest } from '../../types/quest';
 import QuestCard from '../quest-card/quest-card';
 
-function QuestsList(): JSX.Element {
+type QuestsListProps = {
+  quests: Quest[];
+}
+
+function QuestsList({ quests }: QuestsListProps): JSX.Element {
   return (
     <div className="cards-grid">
-      {Array.from({ length: 9 }, (_, i) => <QuestCard key={i} />)}
+      {quests.map((quest) => (
+        <QuestCard
+          key={quest.id}
+          quest={quest}
+        />
+      ))}
     </div>
   );
 }

@@ -1,8 +1,20 @@
+import { useEffect } from 'react';
 import FilterForm from '../../components/filter-form/filter-form';
 import Layout from '../../components/layout/layout';
 import QuestsList from '../../components/quests-list/quests-list';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { fetchQuestsAction } from '../../store/reducers/quests/api-actions';
+import { getQuests } from '../../store/reducers/quests/selectors';
 
 function MainPage(): JSX.Element {
+  const quests = useAppSelector(getQuests);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchQuestsAction());
+  }, [dispatch]);
+
   return (
     <Layout>
       <main className="page-content">
@@ -16,7 +28,7 @@ function MainPage(): JSX.Element {
             <FilterForm />
           </div>
           <h2 className="title visually-hidden">Выберите квест</h2>
-          <QuestsList />
+          <QuestsList quests={quests} />
         </div>
       </main>
     </Layout>
