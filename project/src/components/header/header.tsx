@@ -1,8 +1,17 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getAuthStatus } from '../../store/reducers/user/selectors';
+import LoginButton from '../login-button/login-button';
 import Logo from '../logo/logo';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  hasLoginButton: boolean;
+};
+
+function Header({ hasLoginButton }: HeaderProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthStatus);
+
   return (
     <header className="header">
       <div className="container container--size-l">
@@ -15,13 +24,15 @@ function Header(): JSX.Element {
             <li className="main-nav__item">
               <Link className="link" to={AppRoute.Contacts}>Контакты</Link>
             </li>
-            <li className="main-nav__item">
-              <Link className="link" to={AppRoute.MyQuests}>Мои бронирования</Link>
-            </li>
+            {authorizationStatus.isAuth && (
+              <li className="main-nav__item">
+                <Link className="link" to={AppRoute.MyQuests}>Мои бронирования</Link>
+              </li>
+            )}
           </ul>
         </nav>
         <div className="header__side-nav">
-          <Link className="btn btn--accent header__side-item" to={AppRoute.Login}>Выйти</Link>
+          {hasLoginButton && <LoginButton />}
           <a className="link header__side-item header__phone-link" href="tel:88003335599">8 (000) 111-11-11</a>
         </div>
       </div>
