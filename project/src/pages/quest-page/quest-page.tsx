@@ -22,7 +22,7 @@ function QuestPage(): JSX.Element {
   }
 
   return (
-    <Layout>
+    <Layout pageTitle={quest.title}>
       <main className="decorated-page quest-page">
         <div className="decorated-page__decor" aria-hidden="true">
           <picture>

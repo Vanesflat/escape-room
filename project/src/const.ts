@@ -65,5 +65,6 @@ export const DEFAULT_LEVEL = Level.Any;
 export enum NameSpace {
   App = 'APP',
   Quests = 'QUESTS',
-  Quest = 'QUEST'
+  Quest = 'QUEST',
+  User = 'USER'
 }

@@ -1,0 +1,12 @@
+import { createSelector } from '@reduxjs/toolkit';
+import { AuthorizationStatus, NameSpace, Status } from '../../../const';
+import { State } from '../../../types/store';
+
+export const getAuthorizationStatus = (state: State): AuthorizationStatus => state[NameSpace.User].authorizationStatus;
+export const getLogin = (state: State): string => state[NameSpace.User].login;
+export const getStatus = (state: State): Status => state[NameSpace.User].status;
+
+export const getAuthStatus = createSelector([getAuthorizationStatus], (status) => ({
+  isAuth: status === AuthorizationStatus.Auth,
+  isLoading: status === AuthorizationStatus.Unknown
+}));
