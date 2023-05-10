@@ -28,18 +28,21 @@ export enum Status {
 }
 
 export enum Level {
+  Any = 'any',
   Easy = 'easy',
   Medium = 'medium',
   Hard = 'hard'
 }
 
 export const levelDictionary = {
+  [Level.Any]: 'любой',
   [Level.Easy]: 'лёгкий',
   [Level.Medium]: 'средний',
   [Level.Hard]: 'сложный'
 };
 
 export enum Type {
+  All = 'all',
   Adventures = 'adventures',
   Horror = 'horror',
   Mystic = 'mystic',
@@ -48,14 +51,19 @@ export enum Type {
 }
 
 export const typeDictionary = {
+  [Type.All]: 'все квесты',
   [Type.Adventures]: 'приключения',
   [Type.Horror]: 'ужасы',
   [Type.Mystic]: 'мистика',
   [Type.Detective]: 'детектив',
-  [Type.SciFi]: 'научная фантастика'
+  [Type.SciFi]: 'sci-fi'
 };
 
+export const DEFAULT_TYPE = Type.All;
+export const DEFAULT_LEVEL = Level.Any;
+
 export enum NameSpace {
+  App = 'APP',
   Quests = 'QUESTS',
   Quest = 'QUEST'
 }
