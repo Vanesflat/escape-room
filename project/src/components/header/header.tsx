@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Logo from '../logo/logo';
 
 function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container container--size-l">
-        <span className="logo header__logo">
-          <svg width="134" height="52" aria-hidden="true">
-            <use xlinkHref="#logo"></use>
-          </svg>
-        </span>
+        <Logo />
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
