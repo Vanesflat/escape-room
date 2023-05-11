@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
 import FilterForm from '../../components/filter-form/filter-form';
 import Layout from '../../components/layout/layout';
+import Loader from '../../components/loader/loader';
 import QuestsList from '../../components/quests-list/quests-list';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { fetchQuestsAction } from '../../store/reducers/quests/api-actions';
-import { getRenderedQuests } from '../../store/reducers/quests/selectors';
+import { getQuestsStatus, getRenderedQuests } from '../../store/reducers/quests/selectors';
 
 function MainPage(): JSX.Element {
   const renderedQuests = useAppSelector(getRenderedQuests);
+  const questsStatus = useAppSelector(getQuestsStatus);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchQuestsAction());
   }, [dispatch]);
+
+  if (questsStatus.isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Layout>
