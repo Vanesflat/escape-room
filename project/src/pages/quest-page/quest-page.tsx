@@ -4,8 +4,8 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { fetchQuestAction } from '../../store/reducers/quest/api-actions';
 import { getQuest, getQuestStatus } from '../../store/reducers/quest/selectors';
-import { useParams } from 'react-router-dom';
-import { levelDictionary, typeDictionary } from '../../const';
+import { generatePath, Link, useParams } from 'react-router-dom';
+import { AppRoute, levelDictionary, typeDictionary } from '../../const';
 import Loader from '../../components/loader/loader';
 
 function QuestPage(): JSX.Element {
@@ -29,7 +29,7 @@ function QuestPage(): JSX.Element {
         <div className="decorated-page__decor" aria-hidden="true">
           <picture>
             <source type="image/webp" srcSet={quest.coverImgWebp} />
-            <img src={quest.coverImg} width="1366" height="768" alt={quest.title} />
+            <img src={quest.coverImg} srcSet={quest.coverImgWebp} width="1366" height="768" alt={quest.title} />
           </picture>
         </div>
         <div className="container container--size-l">
@@ -49,7 +49,7 @@ function QuestPage(): JSX.Element {
               </li>
             </ul>
             <p className="quest-page__description">{quest.description}</p>
-            <a className="btn btn--accent btn--cta quest-page__btn" href="booking.html">Забронировать</a>
+            <Link className="btn btn--accent btn--cta quest-page__btn" to={generatePath(AppRoute.Booking, { id: questId })}>Забронировать</Link>
           </div>
         </div>
       </main>

@@ -101,3 +101,6 @@ export const currentCustomIcon = new Icon({
   iconSize: [23, 42],
   iconAnchor: [11.5, 42]
 });
+
+export const EMAIL_PATTERN = /^[_a-z0-9-+-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i;
+export const PASSWORD_PATTERN = /(?=.*[a-z])(?=.*[0-9])/g;
