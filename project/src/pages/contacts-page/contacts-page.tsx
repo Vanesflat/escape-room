@@ -1,4 +1,5 @@
 import Layout from '../../components/layout/layout';
+import Map from '../../components/map-contacts/map-contacts';
 
 function ContactsPage(): JSX.Element {
   return (
@@ -42,9 +43,7 @@ function ContactsPage(): JSX.Element {
               </div>
             </dl>
             <div className="contacts__map">
-              <div className="map">
-                <div className="map__container"></div>
-              </div>
+              <Map />
             </div>
           </div>
         </div>

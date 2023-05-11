@@ -1,3 +1,5 @@
+import { Icon } from 'leaflet';
+
 export enum AppRoute {
   Login = '/login',
   Main = '/',
@@ -79,3 +81,23 @@ export enum NameSpace {
   BookingQuests = 'BOOKING-QUESTS',
   User = 'USER'
 }
+
+export const DEFAULT_ZOOM = 16;
+
+export const officeLocation = {
+  latitude: 59.96832206412432,
+  longitude: 30.31735949999995,
+  zoom: DEFAULT_ZOOM,
+};
+
+export const defaultCustomIcon = new Icon({
+  iconUrl: './img/svg/pin-default.svg',
+  iconSize: [23, 42],
+  iconAnchor: [11.5, 42]
+});
+
+export const currentCustomIcon = new Icon({
+  iconUrl: './img/svg/pin-active.svg',
+  iconSize: [23, 42],
+  iconAnchor: [11.5, 42]
+});
