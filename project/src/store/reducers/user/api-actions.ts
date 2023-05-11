@@ -5,12 +5,14 @@ import { dropToken, saveToken } from '../../../services/token';
 import { UserData } from '../../../types/user-data';
 import { AuthData } from '../../../types/auth-data';
 import { redirectToRoute } from '../../action';
+import { fetchBookingQuestsAction } from '../booking-quests/api-actions';
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOptions>(
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<UserData>(APIRoute.Login);
+      dispatch(fetchBookingQuestsAction());
 
       return data;
     } catch {
@@ -26,6 +28,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
       const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(fetchBookingQuestsAction());
 
       return data;
     } catch (err) {

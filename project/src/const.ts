@@ -62,9 +62,20 @@ export const typeDictionary = {
 export const DEFAULT_TYPE = Type.All;
 export const DEFAULT_LEVEL = Level.Any;
 
+export enum Date {
+  Today = 'today',
+  Tomorrow = 'tomorrow'
+}
+
+export const dateDictionary = {
+  [Date.Today]: 'сегодня',
+  [Date.Tomorrow]: 'завтра'
+};
+
 export enum NameSpace {
   App = 'APP',
   Quests = 'QUESTS',
   Quest = 'QUEST',
+  BookingQuests = 'BOOKING-QUESTS',
   User = 'USER'
 }

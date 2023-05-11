@@ -1,13 +1,18 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import Layout from '../../components/layout/layout';
+import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { loginAction } from '../../store/reducers/user/api-actions';
+import { getAuthStatus } from '../../store/reducers/user/selectors';
 
 type Field = {
   value: string;
 };
 
 function LoginPage(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const [formData, setFormData] = useState<Record<string, Field>>({
     email: {
       value: ''
@@ -18,6 +23,12 @@ function LoginPage(): JSX.Element {
   });
 
   const dispatch = useAppDispatch();
+
+  if (authorizationStatus.isAuth) {
+    return (
+      <Navigate to={AppRoute.Main} />
+    );
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

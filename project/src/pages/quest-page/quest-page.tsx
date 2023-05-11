@@ -3,12 +3,14 @@ import Layout from '../../components/layout/layout';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { fetchQuestAction } from '../../store/reducers/quest/api-actions';
-import { getQuest } from '../../store/reducers/quest/selectors';
+import { getQuest, getQuestStatus } from '../../store/reducers/quest/selectors';
 import { useParams } from 'react-router-dom';
 import { levelDictionary, typeDictionary } from '../../const';
+import Loader from '../../components/loader/loader';
 
 function QuestPage(): JSX.Element {
   const quest = useAppSelector(getQuest);
+  const questStatus = useAppSelector(getQuestStatus);
 
   const dispatch = useAppDispatch();
   const questId = String(useParams().id);
@@ -17,8 +19,8 @@ function QuestPage(): JSX.Element {
     dispatch(fetchQuestAction(questId));
   }, [dispatch, questId]);
 
-  if (!quest) {
-    return <div>Ошибка!!!</div>;
+  if (!quest || questStatus.isLoading) {
+    return <Loader />;
   }
 
   return (
