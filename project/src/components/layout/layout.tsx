@@ -12,7 +12,7 @@ function Layout({ pageTitle = '', hasLoginButton = true, children }: LayoutProps
   return (
     <div className="wrapper">
       <Helmet>
-        <title>Escape room {pageTitle}</title>
+        <title>Escape Room {pageTitle}</title>
       </Helmet>
       <Header hasLoginButton={hasLoginButton} />
       {children}

@@ -10,6 +10,7 @@ import ContactsPage from '../../pages/contacts-page/contacts-page';
 import LoginPage from '../../pages/login-page/login-page';
 import MainPage from '../../pages/main-page/main-page';
 import MyQuestsPage from '../../pages/my-quests-page/my-quests-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import QuestPage from '../../pages/quest-page/quest-page';
 import { checkAuthAction } from '../../store/reducers/user/api-actions';
 import { getAuthStatus } from '../../store/reducers/user/selectors';
@@ -63,6 +64,12 @@ function App(): JSX.Element {
               <PrivateRoute>
                 <BookingPage />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='*'
+            element={
+              <NotFoundPage />
             }
           />
         </Routes>
