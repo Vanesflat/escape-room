@@ -10,3 +10,7 @@ export const getAuthStatus = createSelector([getAuthorizationStatus], (status) =
   isAuth: status === AuthorizationStatus.Auth,
   isLoading: status === AuthorizationStatus.Unknown
 }));
+
+export const getLoginStatus = createSelector([getStatus], (status) => ({
+  isLoading: status === Status.Loading
+}));

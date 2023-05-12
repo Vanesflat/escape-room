@@ -2,8 +2,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { loginAction } from '../../store/reducers/user/api-actions';
+import { getLoginStatus } from '../../store/reducers/user/selectors';
 import { FormField, LoginFormFields } from '../../types/form';
+import Loader from '../loader/loader';
 import classes from './login-form.module.scss';
 
 type FormFieldKey = keyof LoginFormFields;
@@ -35,6 +38,7 @@ function LoginForm(): JSX.Element {
   });
 
   const loginFieldKeys = Object.keys(loginFields) as FormFieldKey[];
+  const loginStatus = useAppSelector(getLoginStatus);
 
   const dispatch = useAppDispatch();
 
@@ -81,7 +85,11 @@ function LoginForm(): JSX.Element {
               );
             })}
           </div>
-          <button className="btn btn--accent btn--general login-form__submit">Войти</button>
+          <button
+            className="btn btn--accent btn--general login-form__submit"
+          >
+            {loginStatus.isLoading ? <Loader isSmall={loginStatus.isLoading} /> : 'Войти'}
+          </button>
         </div>
         <label className="custom-checkbox login-form__checkbox">
           <input
