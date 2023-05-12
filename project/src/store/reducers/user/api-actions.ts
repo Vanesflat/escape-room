@@ -6,6 +6,7 @@ import { UserData } from '../../../types/user-data';
 import { AuthData } from '../../../types/auth-data';
 import { redirectToRoute } from '../../action';
 import { fetchBookingQuestsAction } from '../booking-quests/api-actions';
+import { pushNotification } from '../notifications/notifications';
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkOptions>(
   'user/checkAuth',
@@ -28,11 +29,13 @@ export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
       const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(pushNotification({ type: 'success', message: 'Вход выполнен успешно!' }));
       dispatch(fetchBookingQuestsAction());
 
       return data;
     } catch (err) {
-      throw new Error();
+      dispatch(pushNotification({ type: 'error', message: 'Ошибка входа' }));
+      throw err;
     }
   },
 );
@@ -44,7 +47,8 @@ export const logoutAction = createAsyncThunk<void, undefined, ThunkOptions>(
       await api.delete(APIRoute.Logout);
       dropToken();
     } catch (err) {
-      throw new Error();
+      dispatch(pushNotification({ type: 'error', message: 'Ошибка выхода' }));
+      throw err;
     }
   },
 );

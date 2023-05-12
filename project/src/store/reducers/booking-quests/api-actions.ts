@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../../../const';
 import { BookingQuest } from '../../../types/booking-quest';
 import { ThunkOptions } from '../../../types/store';
+import { pushNotification } from '../notifications/notifications';
 
 export const fetchBookingQuestsAction = createAsyncThunk<BookingQuest[], undefined, ThunkOptions>(
   'data/fetchBookingQuestsAction',
@@ -11,7 +12,8 @@ export const fetchBookingQuestsAction = createAsyncThunk<BookingQuest[], undefin
 
       return data;
     } catch (err) {
-      throw new Error();
+      dispatch(pushNotification({type: 'error', message: 'Ошибка загрузки забронированных квестов'}));
+      throw err;
     }
   }
 );

@@ -79,7 +79,8 @@ export enum NameSpace {
   Quests = 'QUESTS',
   Quest = 'QUEST',
   BookingQuests = 'BOOKING-QUESTS',
-  User = 'USER'
+  User = 'USER',
+  Notification = 'NOTIFICATION'
 }
 
 export const DEFAULT_ZOOM = 16;
