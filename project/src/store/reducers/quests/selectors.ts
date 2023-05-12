@@ -1,10 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace, Status } from '../../../const';
+import { Quest } from '../../../types/quest';
 import { State } from '../../../types/store';
 import { filterByLevel, filterByType } from '../../../utils/filter';
 import { getCurrentLevel, getCurrentType } from '../app/selectors';
 
-export const getQuests = (state: State) => state[NameSpace.Quests].quests;
+export const getQuests = (state: State): Quest[] => state[NameSpace.Quests].quests;
 export const getStatus = (state: State): Status => state[NameSpace.Quests].status;
 
 export const getFilteredByTypeQuests = createSelector(

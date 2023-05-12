@@ -1,10 +1,25 @@
+import { useEffect } from 'react';
 import BookingList from '../../components/booking-list/booking-list';
 import Layout from '../../components/layout/layout';
+import Loader from '../../components/loader/loader';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getBookingQuests } from '../../store/reducers/booking-quests/selectors';
+import { fetchBookingQuestsAction } from '../../store/reducers/booking-quests/api-actions';
+import { getBookingQuests, getBookingQuestsStatus } from '../../store/reducers/booking-quests/selectors';
 
 function MyQuestsPage(): JSX.Element {
   const bookingQuests = useAppSelector(getBookingQuests);
+  const bookingQuestsStatus = useAppSelector(getBookingQuestsStatus);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBookingQuestsAction());
+  }, [dispatch]);
+
+  if (bookingQuestsStatus.isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Layout pageTitle="Мои бронирования">
