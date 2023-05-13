@@ -13,7 +13,8 @@ export enum APIRoute {
   Quests = '/quest',
   MyQuests = '/reservation',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Booking = '/booking'
 }
 
 export enum AuthorizationStatus {
@@ -78,17 +79,18 @@ export enum NameSpace {
   App = 'APP',
   Quests = 'QUESTS',
   Quest = 'QUEST',
+  QuestPlaces = 'QUEST-PLACES',
   BookingQuests = 'BOOKING-QUESTS',
   User = 'USER',
   Notification = 'NOTIFICATION'
 }
 
-export const DEFAULT_ZOOM = 16;
+export const DEFAULT_ZOOM = 10;
 
 export const officeLocation = {
   latitude: 59.96832206412432,
   longitude: 30.31735949999995,
-  zoom: DEFAULT_ZOOM,
+  zoom: 16,
 };
 
 export const defaultCustomIcon = new Icon({

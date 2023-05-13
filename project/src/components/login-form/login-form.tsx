@@ -13,12 +13,14 @@ type FormFieldKey = keyof LoginFormFields;
 
 const loginFields: Record<FormFieldKey, FormField> = {
   email: {
+    type: 'email',
     label: 'E - mail',
     placeholder: 'Адрес электронной почты',
     pattern: EMAIL_PATTERN,
     errorText: 'Введён некорректный адрес электронной почты'
   },
   password: {
+    type: 'password',
     label: 'Пароль',
     placeholder: 'Пароль',
     pattern: PASSWORD_PATTERN,
@@ -62,7 +64,7 @@ function LoginForm(): JSX.Element {
           <h1 className="title title--size-s login-form__title">Вход</h1>
           <div className="login-form__inputs">
             {loginFieldKeys.map((key: FormFieldKey) => {
-              const { label, placeholder, pattern, errorText } = loginFields[key];
+              const { type, label, placeholder, pattern, errorText } = loginFields[key];
 
               return (
                 <div className="custom-input login-form__input" key={key}>
@@ -75,7 +77,7 @@ function LoginForm(): JSX.Element {
                         message: errorText
                       }
                     })}
-                    type={key}
+                    type={type}
                     id={key}
                     name={key}
                     placeholder={placeholder}
