@@ -1,5 +1,6 @@
-import { levelDictionary } from '../../const';
+import { dateDictionary, levelDictionary } from '../../const';
 import { BookingQuest } from '../../types/booking-quest';
+import { ucFirst } from '../../utils/common';
 
 type BookingQuestCardProps = {
   bookingQuest: BookingQuest;
@@ -16,7 +17,7 @@ function BookingQuestCard({ bookingQuest }: BookingQuestCardProps): JSX.Element 
       </div>
       <div className="quest-card__content">
         <div className="quest-card__info-wrapper"><a className="quest-card__link" href="quest.html">{bookingQuest.quest.title}</a>
-          <span className="quest-card__info">[{`${bookingQuest.date},&nbsp;${bookingQuest.time}. ${bookingQuest.location.address}`}]</span>
+          <span className="quest-card__info">{`${ucFirst(dateDictionary[bookingQuest.date])}, ${bookingQuest.time}. ${bookingQuest.location.address}`}</span>
         </div>
         <ul className="tags quest-card__tags">
           <li className="tags__item">
