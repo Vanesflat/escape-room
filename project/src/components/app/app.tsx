@@ -1,22 +1,21 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Routes, Route } from 'react-router-dom';
-import browserHistory from '../../browser-history';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import BookingPage from '../../pages/booking-page/booking-page';
-import ContactsPage from '../../pages/contacts-page/contacts-page';
-import LoginPage from '../../pages/login-page/login-page';
 import MainPage from '../../pages/main-page/main-page';
-import MyQuestsPage from '../../pages/my-quests-page/my-quests-page';
-import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import QuestPage from '../../pages/quest-page/quest-page';
 import { checkAuthAction } from '../../store/reducers/user/api-actions';
 import { getAuthStatus } from '../../store/reducers/user/selectors';
-import HistoryRouter from '../history-router/history-router';
 import Loader from '../loader/loader';
 import PrivateRoute from '../private-route/private-route';
+
+const ContactsPage = lazy(() => import('../../pages/contacts-page/contacts-page'));
+const LoginPage = lazy(() => import('../../pages/login-page/login-page'));
+const MyQuestsPage = lazy(() => import('../../pages/my-quests-page/my-quests-page'));
+const NotFoundPage = lazy(() => import('../../pages/not-found-page/not-found-page'));
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthStatus);
@@ -31,8 +30,8 @@ function App(): JSX.Element {
   }
 
   return (
-    <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
+    <Suspense fallback={<Loader />}>
+      <HelmetProvider>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -73,8 +72,8 @@ function App(): JSX.Element {
             }
           />
         </Routes>
-      </HistoryRouter>
-    </HelmetProvider>
+      </HelmetProvider>
+    </Suspense>
   );
 }
 
