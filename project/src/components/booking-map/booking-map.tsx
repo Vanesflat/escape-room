@@ -1,22 +1,33 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map/use-map';
 import 'leaflet/dist/leaflet.css';
 import { layerGroup, Marker } from 'leaflet';
 import { currentCustomIcon, defaultCustomIcon } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getCurrentQuestPlace, getQuestPlaces } from '../../store/reducers/quest-places/selectors';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { changeCurrentPlace } from '../../store/reducers/quest-places/quest-places';
 import { QuestPlace } from '../../types/quest';
 
-type BookingMapProps = {
-  currentQuestPlace: QuestPlace;
-  questPlaces: QuestPlace[];
-  onMarkerClick: (questPlace: QuestPlace) => void;
-};
+function BookingMap(): JSX.Element {
+  let currentQuestPlace = useAppSelector(getCurrentQuestPlace);
+  const questPlaces = useAppSelector(getQuestPlaces);
 
-function BookingMap({ currentQuestPlace, questPlaces, onMarkerClick }: BookingMapProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const mapRef = useRef(null);
+
+  if (!currentQuestPlace) {
+    currentQuestPlace = questPlaces[0];
+  }
+
   const map = useMap(mapRef, { latitude: currentQuestPlace.location.coords[0], longitude: currentQuestPlace.location.coords[1] });
 
+  const handleMarkerClick = useCallback((questPlace: QuestPlace): void => {
+    dispatch(changeCurrentPlace(questPlace));
+  }, [dispatch]);
+
   useEffect(() => {
-    if (map) {
+    if (map && currentQuestPlace) {
       map.setView(currentQuestPlace.location.coords);
       const markerLayer = layerGroup().addTo(map);
       questPlaces.forEach((questPlace) => {
@@ -26,14 +37,14 @@ function BookingMap({ currentQuestPlace, questPlaces, onMarkerClick }: BookingMa
         });
 
         marker.setIcon(
-          questPlace.location.address === currentQuestPlace.location.address
+          currentQuestPlace && questPlace.location.address === currentQuestPlace.location.address
             ? currentCustomIcon
             : defaultCustomIcon
-        ).on('click', () => onMarkerClick(questPlace))
+        ).on('click', () => handleMarkerClick(questPlace))
           .addTo(markerLayer);
       });
     }
-  }, [map, questPlaces, currentQuestPlace, onMarkerClick]);
+  }, [map, questPlaces, currentQuestPlace, handleMarkerClick]);
 
   return (
     <div className="booking-map">

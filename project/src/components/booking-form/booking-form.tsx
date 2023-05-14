@@ -3,17 +3,15 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Date } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { bookQuestAction } from '../../store/reducers/booking-quests/api-actions';
+import { getCurrentQuestPlace } from '../../store/reducers/quest-places/selectors';
+import { getQuest } from '../../store/reducers/quest/selectors';
 import { BookingData, BookingPostData } from '../../types/booking-data';
 import { BookingFormFields, FormField } from '../../types/form';
-import { Quest, QuestPlace } from '../../types/quest';
 import DateList from '../date-list/date-list';
+import Loader from '../loader/loader';
 import classes from './booking-form.module.scss';
-
-type BookingFormProps = {
-  currentQuestPlace: QuestPlace;
-  quest: Quest;
-}
 
 type FormFieldKey = keyof BookingFormFields;
 
@@ -43,7 +41,7 @@ const bookingFields: Record<FormFieldKey, FormField> = {
 
 const bookingFieldKeys = Object.keys(bookingFields) as FormFieldKey[];
 
-function BookingForm({ currentQuestPlace, quest }: BookingFormProps): JSX.Element {
+function BookingForm(): JSX.Element {
   const {
     register,
     handleSubmit,
@@ -58,10 +56,6 @@ function BookingForm({ currentQuestPlace, quest }: BookingFormProps): JSX.Elemen
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
   const [currentTime, setCurrentTime] = useState('');
   const [withChildren, setWithChildren] = useState(false);
-  const [minPersonCount, maxPersonCount] = quest.peopleMinMax;
-
-  bookingFields.person.pattern = new RegExp(`^([${minPersonCount}-${maxPersonCount}])$`);
-  bookingFields.person.errorText = `Количество участников от ${minPersonCount} до ${maxPersonCount}`;
 
   const dispatch = useAppDispatch();
 
@@ -69,6 +63,18 @@ function BookingForm({ currentQuestPlace, quest }: BookingFormProps): JSX.Elemen
     setCurrentDate(date);
     setCurrentTime(time);
   }, []);
+
+  const quest = useAppSelector(getQuest);
+  const currentQuestPlace = useAppSelector(getCurrentQuestPlace);
+
+  if (!quest || !currentQuestPlace) {
+    return <Loader />;
+  }
+
+  const [minPersonCount, maxPersonCount] = quest.peopleMinMax;
+
+  bookingFields.person.pattern = new RegExp(`^([${minPersonCount}-${maxPersonCount}])$`);
+  bookingFields.person.errorText = `Количество участников от ${minPersonCount} до ${maxPersonCount}`;
 
   const resetBookingFormData = () => {
     setCurrentDate(null);

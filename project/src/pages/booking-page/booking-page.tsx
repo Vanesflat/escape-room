@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../components/layout/layout';
 import Loader from '../../components/loader/loader';
@@ -9,13 +9,10 @@ import { getQuestStatus } from '../../store/reducers/quest/selectors';
 import BookingForm from '../../components/booking-form/booking-form';
 import { fetchQuestAction } from '../../store/reducers/quest/api-actions';
 import BookingMap from '../../components/booking-map/booking-map';
-import { getQuestPlaces, getQuestPlacesStatus } from '../../store/reducers/quest-places/selectors';
+import { getQuestPlacesStatus } from '../../store/reducers/quest-places/selectors';
 import { fetchQuestPlacesAction } from '../../store/reducers/quest-places/api-actions';
-import { QuestPlace } from '../../types/quest';
 
 function BookingPage(): JSX.Element {
-  const [currentQuestPlace, setCurrentQuestPlace] = useState<QuestPlace | null>(null);
-  const questPlaces = useAppSelector(getQuestPlaces);
   const questPlacesStatus = useAppSelector(getQuestPlacesStatus);
   const quest = useAppSelector(getQuest);
   const questStatus = useAppSelector(getQuestStatus);
@@ -28,17 +25,7 @@ function BookingPage(): JSX.Element {
     dispatch(fetchQuestPlacesAction(questId));
   }, [dispatch, questId]);
 
-  useEffect(() => {
-    if (questPlaces) {
-      setCurrentQuestPlace(questPlaces[0]);
-    }
-  }, [questPlaces]);
-
-  const onMarkerClick = (questPlace: QuestPlace): void => {
-    setCurrentQuestPlace(questPlace);
-  };
-
-  if (!quest || !questPlaces || !currentQuestPlace || questStatus.isLoading || questPlacesStatus.isLoading) {
+  if (!quest || questStatus.isLoading || questPlacesStatus.isLoading) {
     return <Loader />;
   }
 
@@ -58,16 +45,9 @@ function BookingPage(): JSX.Element {
             <p className="title title--size-m title--uppercase page-content__title">{quest.title}</p>
           </div>
           <div className="page-content__item">
-            <BookingMap
-              currentQuestPlace={currentQuestPlace}
-              questPlaces={questPlaces}
-              onMarkerClick={onMarkerClick}
-            />
+            <BookingMap />
           </div>
-          <BookingForm
-            currentQuestPlace={currentQuestPlace}
-            quest={quest}
-          />
+          <BookingForm />
         </div>
       </main>
     </Layout>
