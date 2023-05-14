@@ -25,11 +25,27 @@ export const bookQuestAction = createAsyncThunk<BookingData, BookingPostData, Th
   async ({ questId, bookingData }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post<BookingData>(`${APIRoute.Quests}/${questId}${APIRoute.Booking}`, bookingData);
+      dispatch(pushNotification({ type: 'success', message: 'Квест забронирован!' }));
       dispatch(redirectToRoute(AppRoute.MyQuests));
 
       return data;
     } catch (err) {
       dispatch(pushNotification({ type: 'error', message: 'Ошибка бронирования квеста' }));
+      throw err;
+    }
+  }
+);
+
+export const deleteBookingQuestAction = createAsyncThunk<string, string, ThunkOptions>(
+  'data/deleteBookingQuest',
+  async (placeId, { dispatch, extra: api }) => {
+    try {
+      await api.delete(`${APIRoute.MyQuests}/${placeId}`);
+      dispatch(pushNotification({ type: 'info', message: 'Бронирование удалено' }));
+
+      return placeId;
+    } catch (err) {
+      dispatch(pushNotification({ type: 'error', message: 'Ошибка удаления бронирования' }));
       throw err;
     }
   }

@@ -1,4 +1,6 @@
 import { dateDictionary, levelDictionary } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { deleteBookingQuestAction } from '../../store/reducers/booking-quests/api-actions';
 import { BookingQuest } from '../../types/booking-quest';
 import { ucFirst } from '../../utils/common';
 
@@ -7,6 +9,12 @@ type BookingQuestCardProps = {
 };
 
 function BookingQuestCard({ bookingQuest }: BookingQuestCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(deleteBookingQuestAction(bookingQuest.id));
+  };
+
   return (
     <div className="quest-card">
       <div className="quest-card__img">
@@ -31,7 +39,13 @@ function BookingQuestCard({ bookingQuest }: BookingQuestCardProps): JSX.Element 
             </svg>{levelDictionary[bookingQuest.quest.level]}
           </li>
         </ul>
-        <button className="btn btn--accent btn--secondary quest-card__btn" type="button">Отменить</button>
+        <button
+          className="btn btn--accent btn--secondary quest-card__btn"
+          type="button"
+          onClick={handleClick}
+        >
+          Отменить
+        </button>
       </div>
     </div>
   );

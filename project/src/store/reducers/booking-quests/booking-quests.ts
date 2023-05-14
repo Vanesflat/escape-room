@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, Status } from '../../../const';
 import { BookingQuest } from '../../../types/booking-quest';
-import { fetchBookingQuestsAction } from './api-actions';
+import { deleteBookingQuestAction, fetchBookingQuestsAction } from './api-actions';
 
 export type BookingQuestsSlice = {
   quests: BookingQuest[];
@@ -28,6 +28,9 @@ export const bookingQuestsSlice = createSlice({
       })
       .addCase(fetchBookingQuestsAction.rejected, (state) => {
         state.status = Status.Error;
+      })
+      .addCase(deleteBookingQuestAction.fulfilled, (state, action) => {
+        state.quests = state.quests.filter((quest) => quest.id !== action.payload);
       });
   }
 });
