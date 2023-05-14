@@ -1,12 +1,11 @@
-import { BookingQuest } from '../../types/booking-quest';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getBookingQuests } from '../../store/reducers/booking-quests/selectors';
 import BookingQuestCard from '../booking-card/booking-card';
 import QuestsEmpty from '../quests-empty/quests-empty';
 
-type BookingListProps = {
-  bookingQuests: BookingQuest[];
-}
+function BookingList(): JSX.Element {
+  const bookingQuests = useAppSelector(getBookingQuests);
 
-function BookingList({ bookingQuests }: BookingListProps): JSX.Element {
   if (!bookingQuests.length) {
     return <QuestsEmpty />;
   }

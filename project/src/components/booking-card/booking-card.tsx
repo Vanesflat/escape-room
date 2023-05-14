@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, dateDictionary, levelDictionary } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
@@ -25,7 +26,7 @@ function BookingQuestCard({ bookingQuest }: BookingQuestCardProps): JSX.Element 
         </picture>
       </div>
       <div className="quest-card__content">
-        <div className="quest-card__info-wrapper"><Link className="quest-card__link" to={generatePath(AppRoute.Quest, {id: `${bookingQuest.quest.id}`})}>{bookingQuest.quest.title}</Link>
+        <div className="quest-card__info-wrapper"><Link className="quest-card__link" to={generatePath(AppRoute.Quest, { id: `${bookingQuest.quest.id}` })}>{bookingQuest.quest.title}</Link>
           <span className="quest-card__info">{`${ucFirst(dateDictionary[bookingQuest.date])}, ${bookingQuest.time}. ${bookingQuest.location.address}`}</span>
         </div>
         <ul className="tags quest-card__tags">
@@ -52,4 +53,4 @@ function BookingQuestCard({ bookingQuest }: BookingQuestCardProps): JSX.Element 
   );
 }
 
-export default BookingQuestCard;
+export default memo(BookingQuestCard);

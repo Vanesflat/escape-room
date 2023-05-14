@@ -5,10 +5,10 @@ import Loader from '../../components/loader/loader';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { fetchBookingQuestsAction } from '../../store/reducers/booking-quests/api-actions';
-import { getBookingQuests, getBookingQuestsStatus } from '../../store/reducers/booking-quests/selectors';
+import { getBookingQuestsStatus } from '../../store/reducers/booking-quests/selectors';
 
 function MyQuestsPage(): JSX.Element {
-  const bookingQuests = useAppSelector(getBookingQuests);
+  // const bookingQuests = useAppSelector(getBookingQuests);
   const bookingQuestsStatus = useAppSelector(getBookingQuestsStatus);
 
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ function MyQuestsPage(): JSX.Element {
           <div className="page-content__title-wrapper">
             <h1 className="title title--size-m page-content__title">Мои бронирования</h1>
           </div>
-          <BookingList bookingQuests={bookingQuests} />
+          <BookingList />
         </div>
       </main>
     </Layout>
