@@ -6,7 +6,7 @@ import { getCurrentType } from '../../store/reducers/app/selectors';
 import { ucFirst } from '../../utils/common';
 
 function FilterByType(): JSX.Element {
-  const typesSettings = {
+  const typeIconsSettings = {
     [Type.All]: {
       iconName: 'all-quests',
       width: 26
@@ -54,11 +54,11 @@ function FilterByType(): JSX.Element {
             <label className="filter__label" htmlFor={type}>
               <svg
                 className="filter__icon"
-                width={typesSettings[type].width}
+                width={typeIconsSettings[type].width}
                 height="30"
                 aria-hidden="true"
               >
-                <use xlinkHref={`#icon-${typesSettings[type].iconName}`}></use>
+                <use xlinkHref={`#icon-${typeIconsSettings[type].iconName}`}></use>
               </svg><span className="filter__label-text">{ucFirst(typeDictionary[type])}</span>
             </label>
           </li>
