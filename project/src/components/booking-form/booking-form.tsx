@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Date } from '../../const';
@@ -65,10 +65,10 @@ function BookingForm({ currentQuestPlace, quest }: BookingFormProps): JSX.Elemen
 
   const dispatch = useAppDispatch();
 
-  const onDateChange = (date: Date, time: string): void => {
+  const onDateChange = useCallback((date: Date, time: string): void => {
     setCurrentDate(date);
     setCurrentTime(time);
-  };
+  }, []);
 
   const resetBookingFormData = () => {
     setCurrentDate(null);

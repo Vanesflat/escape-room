@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Date, dateDictionary } from '../../const';
 import { Slots } from '../../types/quest';
 import DateItem from '../date-item/date-item';
@@ -34,4 +35,4 @@ function DateList({ slots, onDateChange }: DateListProps): JSX.Element {
   );
 }
 
-export default DateList;
+export default memo(DateList);
