@@ -1,6 +1,7 @@
 import { AppRoute, levelDictionary } from '../../const';
 import { Quest } from '../../types/quest';
 import { Link, generatePath } from 'react-router-dom';
+import { memo } from 'react';
 
 type QuestCardProps = {
   quest: Quest;
@@ -36,4 +37,4 @@ function QuestCard({ quest }: QuestCardProps): JSX.Element {
   );
 }
 
-export default QuestCard;
+export default memo(QuestCard);

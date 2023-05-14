@@ -1,19 +1,18 @@
-import { Quest } from '../../types/quest';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getRenderedQuests } from '../../store/reducers/quests/selectors';
 import QuestCard from '../quest-card/quest-card';
 import QuestsEmpty from '../quests-empty/quests-empty';
 
-type QuestsListProps = {
-  quests: Quest[];
-}
+function QuestsList(): JSX.Element {
+  const renderedQuests = useAppSelector(getRenderedQuests);
 
-function QuestsList({ quests }: QuestsListProps): JSX.Element {
-  if (!quests.length) {
+  if (!renderedQuests.length) {
     return <QuestsEmpty />;
   }
 
   return (
     <div className="cards-grid">
-      {quests.map((quest) => (
+      {renderedQuests.map((quest) => (
         <QuestCard
           key={quest.id}
           quest={quest}
