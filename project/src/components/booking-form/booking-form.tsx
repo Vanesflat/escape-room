@@ -27,7 +27,7 @@ const bookingFields: Record<FormFieldKey, FormField> = {
     type: 'tel',
     label: 'Контактный телефон',
     placeholder: 'Телефон',
-    pattern: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{10,11}$/,
+    pattern: /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){9,12}\d$/,
     errorText: 'Пожалуйста, введите корректный номер телефона'
   },
   person: {
