@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute } from '../../../const';
+import { APIRoute } from '../../../const';
 import { ThunkOptions } from '../../../types/store';
 import { dropToken, saveToken } from '../../../services/token';
 import { UserData } from '../../../types/user-data';
 import { AuthData } from '../../../types/auth-data';
-import { redirectToRoute } from '../../action';
 import { fetchBookingQuestsAction } from '../booking-quests/api-actions';
 import { pushNotification } from '../notifications/notifications';
 
@@ -28,7 +27,6 @@ export const loginAction = createAsyncThunk<UserData, AuthData, ThunkOptions>(
     try {
       const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
       saveToken(data.token);
-      dispatch(redirectToRoute(AppRoute.Main));
       dispatch(pushNotification({ type: 'success', message: 'Вход выполнен успешно!' }));
       dispatch(fetchBookingQuestsAction());
 
