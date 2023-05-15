@@ -3,13 +3,13 @@ import { NameSpace, Status } from '../../../const';
 import { QuestPlace } from '../../../types/quest';
 import { fetchQuestPlacesAction } from './api-actions';
 
-export type QuestBookingInfoSlice = {
+export type QuestPlacesSlice = {
   questPlaces: QuestPlace[];
   currentPlace: QuestPlace | null;
   status: Status;
 };
 
-const initialState: QuestBookingInfoSlice = {
+const initialState: QuestPlacesSlice = {
   questPlaces: [],
   currentPlace: null,
   status: Status.Idle

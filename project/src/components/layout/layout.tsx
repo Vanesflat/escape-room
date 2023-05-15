@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import Footer from '../footer/footer';
 import Header from '../header/header';
+import Path from '../path/path';
 
 type LayoutProps = {
   pageTitle?: string;
@@ -10,14 +11,17 @@ type LayoutProps = {
 
 function Layout({ pageTitle = '', hasLoginButton = true, children }: LayoutProps): JSX.Element {
   return (
-    <div className="wrapper">
-      <Helmet>
-        <title>{pageTitle} Escape Room</title>
-      </Helmet>
-      <Header hasLoginButton={hasLoginButton} />
-      {children}
-      <Footer />
-    </div>
+    <>
+      <Path />
+      <div className="wrapper">
+        <Helmet>
+          <title>{pageTitle} Escape Room</title>
+        </Helmet>
+        <Header hasLoginButton={hasLoginButton} />
+        {children}
+        <Footer />
+      </div>
+    </>
   );
 }
 
