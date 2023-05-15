@@ -1,16 +1,21 @@
-import { Navigate } from 'react-router-dom';
+import { generatePath, Navigate, useLocation } from 'react-router-dom';
 import Layout from '../../components/layout/layout';
 import LoginForm from '../../components/login-form/login-form';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getQuest } from '../../store/reducers/quest/selectors';
 import { getAuthStatus } from '../../store/reducers/user/selectors';
 
 function LoginPage(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthStatus);
+  const quest = useAppSelector(getQuest);
+
+  const location = useLocation();
+  const route = quest && location.state ? generatePath(AppRoute.Booking, { id: quest.id }) : AppRoute.Main;
 
   if (authorizationStatus.isAuth) {
     return (
-      <Navigate to={AppRoute.Main} />
+      <Navigate to={route} />
     );
   }
 
